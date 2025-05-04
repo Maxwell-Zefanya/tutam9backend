@@ -49,7 +49,7 @@ exports.updateUser = async(user) => {
             "SELECT username FROM users WHERE id = ($1);",
             [user.id]
         );
-        if(search.rows.length !== 0) {
+        if(search.rows.length === 0) {
             return search.rows[0];
         }
         const res = await db.query(
