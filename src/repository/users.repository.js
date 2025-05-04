@@ -46,15 +46,15 @@ exports.getEmail = async(email) => {
 exports.updateUser = async(user) => {
     try {
         const search = await db.query(
-            "SELECT username FROM users WHERE username = ($2);",
-            [user.email, user.name]
+            "SELECT username FROM users WHERE id = ($1);",
+            [user.id]
         );
         if(search.rows.length !== 0) {
             return search.rows[0];
         }
         const res = await db.query(
             "UPDATE users SET username = ($1), email = ($2), password = ($3) WHERE id = ($4) RETURNING *;",
-            [user.name, user.email, user.password, user.id]
+            [user.username, user.email, user.password, user.id]
         );
         return res.rows[0];
     } catch (error) {

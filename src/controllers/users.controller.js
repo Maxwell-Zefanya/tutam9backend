@@ -57,7 +57,6 @@ exports.loginUser = async(req, res) => {
             r.resp(res, false, 400, "Incorrect password or email", null);
         } else {
             let hashpw = user.password;
-            console.log(hashcg(plaintext, 2, hashpw));
             if(hashcg(plaintext, 2, hashpw) === true) {
                 r.resp(res, true, 200, "Login successful", user);
             } else {
@@ -89,14 +88,14 @@ exports.getEmail = async(req, res) => {
 
 
 exports.updateUser = async(req, res) => {
-    if(!req.body.id || !req.body.name || !req.body.password || !req.body.email) {
+    if(!req.body.id || !req.body.username || !req.body.password || !req.body.email) {
         return r.resp(res, false, 400, "ID, name, password and email are required", null);
     }
     
     try {
         let info = req.body;
         if(!isValid(info)) {
-            r.resp(res, false, 400, "Input is invalid.", null);
+            r.resp(res, false, 400, "Password is invalid.", null);
         } else {
             let temp = hashcg(info.password, 1, null);
             info.password = temp;
