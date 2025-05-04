@@ -12,9 +12,10 @@ exports.getAllLibraries = async() => {
 exports.getLibraryByUser = async(id) => {
     try {
         const res = await db.query(
-            "SELECT game_id FROM library WHERE user_id = ($1);",
+            "SELECT users.id, games.id, username, games.name, image_url FROM library INNER JOIN users ON users.id = ($1) INNER JOIN games on games.id = game_id;",
             [id]
         );
+        console.log(res.rows);
         return res.rows;
     } catch (error) {
         console.log("Error qry ", error);
